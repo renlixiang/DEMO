@@ -18,8 +18,8 @@
               </template>
               <el-menu-item-group>
                 <el-menu-item index="skin" @click="changeSkin">皮肤</el-menu-item>
-                <el-menu-item index="1-2">选项2</el-menu-item>
-                <el-menu-item index="1-3">选项3</el-menu-item>
+                <el-menu-item index="carousel" @click="changeCarousel">轮播图</el-menu-item>
+                <el-menu-item index="1-3" @click="CSDN">>lunbotu</el-menu-item>
                 <el-menu-item index="1-4">选项4</el-menu-item>
               </el-menu-item-group>
             </el-submenu>
@@ -65,6 +65,14 @@ export default {
     changeSkin: function () {
       this.$router.push({path: 'skin'})
       this.$store.state.activeTab = 'skin'
+    },
+    changeCarousel: function () {
+      this.$router.push({path: 'carousel'})
+      this.$store.state.activeTab = 'carousel'
+    },
+    CSDN: function () {
+      this.$router.push({path: 'csdn'})
+      this.$store.state.activeTab = 'csdn'
     },
     goHome: function () {
       this.$router.push({path: 'home'})

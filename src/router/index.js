@@ -5,6 +5,8 @@ import vueLogin from '@/components/Login'
 import vueMain from '@/components/Main'
 import vueHome from '@/components/Home'
 import vueSkin from '@/components/Skin'
+import vueCarousel from '@/components/Carousel'
+import vueCS from '@/components/CSDN'
 Vue.use(Router)
 
 export default new Router({
@@ -27,6 +29,14 @@ export default new Router({
                     path: 'skin',
                     name: 'skin',
                     component: vueSkin
+                }, {
+                    path: 'carousel',
+                    name: 'carousel',
+                    component: vueCarousel
+                }, {
+                    path: 'csdn',
+                    name: 'csdn',
+                    component: vueCS
                 }]
         }
     ]

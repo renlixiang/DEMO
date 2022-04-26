@@ -13,7 +13,8 @@ const state = {
     asideColor: '#f8dac8',
     mainColor: '#fcede4',
     footerColor: '#f9a7a7',
-    activeTab: ''
+    activeTab: '',
+    activeImg: ''
 }
 
 const actions = {
