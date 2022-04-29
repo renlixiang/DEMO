@@ -4,27 +4,31 @@
       <div class="icon" v-show="showIcon">
       <i
         class="el-icon-arrow-left"
-        @click="leftMove"></i>
+        @click="rightMove"></i>
       <i
         class="el-icon-arrow-right"
-        @click="rightMove"></i>
-      <div class="control">
-        <li @click="changeImg(item.id)"
-            v-for="(item) in imgArr"
-            :key="item.id"
-            :class="item.id===currentIndex? 'active': '' "
-        ></li>
-      </div>
+        @click="leftMove"></i>
+      <ul class="control">
+        <li @click="showImg1"
+            :class="1 === flag? 'slider-active': 'slider'">
+        </li>
+        <li @click="showImg2"
+            :class="2 === flag? 'slider-active': 'slider'">
+        </li>
+        <li @click="showImg3"
+            :class="3 === flag? 'slider-active': 'slider'">
+        </li>
+      </ul>
       </div>
         <div class="image">
           <transition-group :name="name">
-            <div class="jpg" v-if="flag === 1" :key="imgArr[0]">
+            <div class="jpg" v-show="currentIndex === imgArr[0]? flag = imgArr[0] : false" :key="imgArr[0]">
               <img src="../assets/bgyulan.png" alt="" height="300px" width="500px">
             </div>
-            <div class="jpg" v-if="flag === 2" :key="imgArr[1]">
+            <div class="jpg" v-show="currentIndex === imgArr[1]? flag = imgArr[1] : false" :key="imgArr[1]">
               <img src="../assets/bghuang.jpg" alt="" height="300px" width="500px">
             </div>
-            <div class="jpg" v-if="flag === 3" :key="imgArr[2]">
+            <div class="jpg" v-show="currentIndex === imgArr[2]? flag = imgArr[2] : false" :key="imgArr[2]">
               <img src="../assets/bgfengzheng.png" alt="" height="300px" width="500px">
             </div>
           </transition-group>
@@ -38,51 +42,46 @@ export default {
   name: "vueCarousel",
   data () {
     return {
-      flag: 1,
       timer: '',
       name: 'left',
       imgArr: [1, 2, 3],
-      showIcon: false
+      showIcon: false,
+      currentIndex: 1,
+      flag: 1
     }
   },
   mounted() {
     this.change()
-    //   this.timer = setInterval(() => {
-    //     this.rightImg()
-    //   }, 3000)
   },
   methods: {
     change: function () {
       this.timer = setInterval(() => {
         this.rightImg()
 
-      }, 3000)
+      }, 2000)
     },
     leftImg: function () {
       this.name = 'left'
-      if (this.flag === 1) {
-        this.flag = 3
+      if (this.currentIndex === 1) {
+        this.currentIndex = 3
       } else {
-        this.flag --
+        this.currentIndex --
       }
     },
     rightImg: function () {
       this.name = 'right'
-      if (this.flag === 3) {
-        this.flag = 1
+      if (this.currentIndex === 3) {
+        this.currentIndex = 1
       } else {
-        this.flag ++
+        this.currentIndex ++
       }
     },
     rightMove: function () {
       clearInterval(this.timer)
-      // this.stopTimer()
-      // this.timer = null
       this.rightImg()
     },
     leftMove: function () {
       clearInterval(this.timer)
-      // this.timer = null
       this.leftImg()
     },
     stopTimer: function () {
@@ -92,6 +91,31 @@ export default {
     runTimer: function () {
       this.change()
       this.showIcon = false
+    },
+    showImg1: function () {
+      while (this.currentIndex !== 1) {
+        this.leftImg()
+      }
+    },
+    showImg2: function () {
+      if (this.currentIndex > 2) {
+        while (this.currentIndex !== 2) {
+          this.leftImg()
+        }
+      } else {
+        while (this.currentIndex !== 2) {
+          this.rightImg()
+        }
+      }
+    },
+    showImg3: function () {
+      if (this.currentIndex < 2) {
+        this.leftImg()
+        this.currentIndex = 3
+      } else {
+        this.rightImg()
+        this.currentIndex = 3
+      }
     }
   }
 }

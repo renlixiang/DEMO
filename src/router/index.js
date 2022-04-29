@@ -6,7 +6,8 @@ import vueMain from '@/components/Main'
 import vueHome from '@/components/Home'
 import vueSkin from '@/components/Skin'
 import vueCarousel from '@/components/Carousel'
-import vueCS from '@/components/CSDN'
+import vueWaterfall from '@/components/Waterfall'
+import vuePubuliu from '@/components/pubuliu'
 Vue.use(Router)
 
 export default new Router({
@@ -34,9 +35,13 @@ export default new Router({
                     name: 'carousel',
                     component: vueCarousel
                 }, {
-                    path: 'csdn',
-                    name: 'csdn',
-                    component: vueCS
+                    path: 'waterfall',
+                    name: 'Waterfall',
+                    component: vueWaterfall
+                }, {
+                    path: 'pubuliu',
+                    name: 'pubuliu',
+                    component: vuePubuliu
                 }]
         }
     ]

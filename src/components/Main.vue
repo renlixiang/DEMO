@@ -19,15 +19,17 @@
               <el-menu-item-group>
                 <el-menu-item index="skin" @click="changeSkin">皮肤</el-menu-item>
                 <el-menu-item index="carousel" @click="changeCarousel">轮播图</el-menu-item>
-                <el-menu-item index="1-3" @click="CSDN">>lunbotu</el-menu-item>
-                <el-menu-item index="1-4">选项4</el-menu-item>
+                <el-menu-item index="waterfall" @click="changeWaterfall">瀑布流</el-menu-item>
+                <el-menu-item index="pubuliu" @click="changePubuliu">pubuliu</el-menu-item>
               </el-menu-item-group>
             </el-submenu>
           </el-menu>
         </el-row>
       </el-aside>
       <el-main>
-        <router-view></router-view>
+        <keep-alive>
+          <router-view></router-view>
+        </keep-alive>
       </el-main>
     </el-container>
     <el-footer :style="{'--footerColor': this.$store.state.footerColor}"></el-footer>
@@ -70,9 +72,13 @@ export default {
       this.$router.push({path: 'carousel'})
       this.$store.state.activeTab = 'carousel'
     },
-    CSDN: function () {
-      this.$router.push({path: 'csdn'})
-      this.$store.state.activeTab = 'csdn'
+    changeWaterfall: function () {
+      this.$router.push({path: 'waterfall'})
+      this.$store.state.activeTab = 'waterfall'
+    },
+    changePubuliu: function () {
+      this.$router.push({path: 'pubuliu'})
+      this.$store.state.activeTab = 'pubuliu'
     },
     goHome: function () {
       this.$router.push({path: 'home'})
@@ -83,7 +89,6 @@ export default {
 </script>
 
 <style scoped lang="less">
-//import '../less/global.less'
 
 .container {
   height: 100vh;// 页面高度
@@ -91,9 +96,6 @@ export default {
   flex-wrap: wrap;// 自动换行
   flex-direction: column;// 容器属性 垂直方向
   .el-header /deep/ {
-    //border: black solid 1px;
-    //background-color: #dcaf94;
-    //background-color: @headerColor;
     background-color: var(--headColor);
     height: 100px;
     width: 100%;
@@ -109,29 +111,21 @@ export default {
     }
   }
   .el-container {
-    //border: red solid 1px;
-    //padding: 0 50px;
-    //background-color: #fcede4;
-    //background-color: @containerColor;
     background-color: var(--mainColor);
     overflow: auto;
     flex: 1;
     .el-aside {
       border-right: #999999 solid 1px;
-      //background-color: #f8dac8;
-      //background-color: @asideColor;
       background-color: var(--asideColor);
       .el-row {
         width: 200px;
         /deep/ .el-menu {
           border-right: none;
-          //height: 0;
           background-color: transparent;
         }
       }
     }
     .el-main {
-      //border: black solid 1px;
       .el-tabs {
         .el-icon-plus{
           display: none;
@@ -140,10 +134,7 @@ export default {
     }
   }
   .el-footer {
-    //border: black solid 1px;
     width: 100%;
-    //background-color: #f9a7a7;
-    //background-color: @footerColor;
     background-color: var(--footerColor);
     height: 100px;
     margin-bottom: 0;

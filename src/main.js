@@ -7,6 +7,8 @@ import router from './router'
 import common from './js/common.js'
 import store from './store'
 import 'animate.css'
+import Waterfall from 'vue-waterfall/lib/waterfall'
+import WaterfallSlot from 'vue-waterfall/lib/waterfall-slot'
 Vue.use(ElementUI)
 Vue.config.productionTip = false
 Vue.prototype.$common = common
@@ -14,5 +16,7 @@ Vue.prototype.$common = common
 new Vue({
   router,
   store,
+  Waterfall,
+  WaterfallSlot,
   render: h => h(App),
 }).$mount('#app')

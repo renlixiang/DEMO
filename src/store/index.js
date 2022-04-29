@@ -14,7 +14,7 @@ const state = {
     mainColor: '#fcede4',
     footerColor: '#f9a7a7',
     activeTab: '',
-    activeImg: ''
+    imgElements: []
 }
 
 const actions = {
