@@ -6,8 +6,8 @@ import vueMain from '@/components/Main'
 import vueHome from '@/components/Home'
 import vueSkin from '@/components/Skin'
 import vueCarousel from '@/components/Carousel'
-import vueWaterfall from '@/components/Waterfall'
-import vuePubuliu from '@/components/pubuliu'
+// import vueWaterfall from '@/components/pubu'
+import vueWaterfall from '@/components/waterfall'
 Vue.use(Router)
 
 export default new Router({
@@ -38,10 +38,6 @@ export default new Router({
                     path: 'waterfall',
                     name: 'Waterfall',
                     component: vueWaterfall
-                }, {
-                    path: 'pubuliu',
-                    name: 'pubuliu',
-                    component: vuePubuliu
                 }]
         }
     ]
