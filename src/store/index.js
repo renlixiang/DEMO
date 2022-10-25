@@ -9,6 +9,7 @@ const state = {
     users: {
         123: {phone: '13512345678', password: '123'}
     },
+    currentUser: '',
     headerColor: '#dcaf94',
     asideColor: '#f8dac8',
     mainColor: '#fcede4',

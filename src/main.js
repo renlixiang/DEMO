@@ -9,6 +9,8 @@ import store from './store'
 import 'animate.css'
 import Waterfall from 'vue-waterfall/lib/waterfall'
 import WaterfallSlot from 'vue-waterfall/lib/waterfall-slot'
+
+
 Vue.use(ElementUI)
 Vue.config.productionTip = false
 Vue.prototype.$common = common

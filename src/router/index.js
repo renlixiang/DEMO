@@ -8,12 +8,19 @@ import vueSkin from '@/components/Skin'
 import vueCarousel from '@/components/Carousel'
 // import vueWaterfall from '@/components/pubu'
 import vueWaterfall from '@/components/waterfall'
+import vueSearch from '@/components/Search'
+import vueDrag from '@/components/Drag'
 Vue.use(Router)
 
 export default new Router({
     routes: [
         {
-            path: '/',
+            // 进入后自动进入 /login
+            path: '',
+            redirect: '/login'
+        },
+        {
+            path: '/login',
             name: 'login',
             component: vueLogin
         },
@@ -38,6 +45,16 @@ export default new Router({
                     path: 'waterfall',
                     name: 'Waterfall',
                     component: vueWaterfall
+                },
+                {
+                    path: 'search',
+                    name: 'Search',
+                    component: vueSearch
+                },
+                {
+                    path: 'drag',
+                    name: 'drag',
+                    component: vueDrag
                 }]
         }
     ]

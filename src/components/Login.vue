@@ -133,6 +133,7 @@ export default {
           this.$common('', '密码错误')
         } else {
           // this.$common('', '欢迎进入')
+            this.$store.state.currentUser = this.inputAccount
           this.$router.push('/main')
         }
       } else {

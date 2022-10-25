@@ -22,17 +22,6 @@ export default {
   data() {
     return {
       waterfallList: [],
-      // imgArr: [
-      //   require('../assets/bgfengzheng.png'),
-      //   require('../assets/bghuang.jpg'),
-      //   require('../assets/bgyulan.png'),
-      //   require('../assets/1.jpg'),
-      //   require('../assets/2.jpg'),
-      //   require('../assets/3.png'),
-      //   require('../assets/4.jpg'),
-      //   require('../assets/5.jpg'),
-      //   require('../assets/6.jpg')
-      // ],
       imgArr: [
         {
           src: require('../assets/bgfengzheng.png'),
@@ -119,16 +108,12 @@ export default {
     imgPreloading() {
       for (let i = 0; i < this.imgList.length; i++) {
         let aImg = new Image();
-        // aImg.src = this.imgList[i];
         aImg.src = this.imgList[i].src;
         // onload读取文件
         aImg.onload = aImg.onerror = () => {
           let imgData = {};
           // 按照宽度缩放比例算出图片现在的高度
           imgData.height = this.waterfallImgWidth / aImg.width * aImg.height;
-          // imgData.src = this.imgList[i];
-          // imgData.title = '标题';// 说明文字
-          // imgData.info = '详情说明：啦啦啦啦啦';// 说明文字
           imgData.src = this.imgList[i].src;
           imgData.title = this.imgList[i].title;// 说明文字
           imgData.info = this.imgList[i].info;// 说明文字

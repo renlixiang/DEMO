@@ -21,3 +21,144 @@
     <!-- built files will be auto injected -->
   </body>
 </html>
+
+
+<template>
+  <div class="container">
+    <el-header :style="{'--headColor': this.$store.state.headerColor}">
+      <i class="el-icon-s-home"></i>
+    </el-header>
+    <el-container :style="{'--mainColor': this.$store.state.mainColor}">
+      <el-aside width="250px" :style="{'--asideColor': this.$store.state.asideColor}">
+        <el-row class="tac">
+          <el-menu
+              default-active="2"
+              class="el-menu-vertical-demo"
+              @open="handleOpen"
+              @close="handleClose">
+            <el-submenu index="1">
+              <template slot="title">
+                <i class="el-icon-location"></i>
+                <span>导航一</span>
+              </template>
+              <el-menu-item-group>
+                <el-menu-item index="1-1" @click="changeSkin">皮肤</el-menu-item>
+                <el-menu-item index="1-2">选项2</el-menu-item>
+                <el-menu-item index="1-3">选项3</el-menu-item>
+                <el-menu-item index="1-4">选项4</el-menu-item>
+              </el-menu-item-group>
+            </el-submenu>
+          </el-menu>
+        </el-row>
+      </el-aside>
+      <el-main>
+        <router-view></router-view>
+      </el-main>
+    </el-container>
+    <el-footer :style="{'--footerColor': this.$store.state.footerColor}"></el-footer>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'vueHome',
+  data () {
+    return {
+      editableTabsValue: '2',
+      editableTabs: [{
+        title: 'Tab 1',
+        name: '1',
+        content: 'Tab 1 content'
+      }, {
+        title: 'Tab 2',
+        name: '2',
+        content: 'Tab 2 content'
+      }],
+      tabIndex: 2
+    }
+  },
+  mounted () {
+    this.$router.push({path: 'main'})
+  },
+  methods: {
+    handleOpen (key, keyPath) {
+      console.log(key, keyPath)
+    },
+    handleClose (key, keyPath) {
+      console.log(key, keyPath)
+    },
+    changeSkin: function () {
+      this.$router.push({path: 'skin'})
+    }
+  }
+}
+</script>
+
+<style scoped lang="less">
+//import '../less/global.less'
+
+.container {
+  height: 100vh;// 页面高度
+  display: flex;
+  flex-wrap: wrap;// 自动换行
+  flex-direction: column;// 容器属性 垂直方向
+  .el-header /deep/ {
+    //border: black solid 1px;
+    //background-color: #dcaf94;
+    //background-color: @headerColor;
+    background-color: var(--headColor);
+    height: 100px;
+    width: 100%;
+    .el-icon-s-home {
+      font-size: 2em;
+      margin-top: 10px;
+      margin-left: 20px;
+      cursor: pointer;
+    }
+    .el-color-picker {
+      margin-top: 10px;
+      margin-left: 90%;
+    }
+  }
+  .el-container {
+    //border: red solid 1px;
+    //padding: 0 50px;
+    //background-color: #fcede4;
+    //background-color: @containerColor;
+    background-color: var(--mainColor);
+    overflow: auto;
+    flex: 1;
+    .el-aside {
+      border-right: #999999 solid 1px;
+      //background-color: #f8dac8;
+      //background-color: @asideColor;
+      background-color: var(--asideColor);
+      .el-row {
+        width: 200px;
+        /deep/ .el-menu {
+          border-right: none;
+          //height: 0;
+          background-color: transparent;
+        }
+      }
+    }
+    .el-main {
+      //border: black solid 1px;
+      .el-tabs {
+        .el-icon-plus{
+          display: none;
+        }
+      }
+    }
+  }
+  .el-footer {
+    //border: black solid 1px;
+    width: 100%;
+    //background-color: #f9a7a7;
+    //background-color: @footerColor;
+    background-color: var(--footerColor);
+    height: 100px;
+    margin-bottom: 0;
+  }
+}
+</style>
