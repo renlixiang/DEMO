@@ -23,18 +23,17 @@
         </div>
 <!--        展示用户列表-->
         <div v-show="userList.length" class="user" v-for="item in userList" :key="item.login">
-            <img :src="item.avatar_url" alt="" @click="userhtml(item)">
-            <span @click="userhtml(item)">{{item.login}}</span>
-<!--            https://api.github.com/search/users?q=xxx  get请求-->
+            <img :src="item.avatar_url" alt="" @click="userHtml(item)">
+            <span @click="userHtml(item)">{{item.login}}</span>
         </div>
     </div>
 </div>
 </template>
 
 
-
+<!-- https://api.github.com/search/users?q=xxx  get请求-->
 <script>
-import axios from 'axios'
+// import axios from 'axios'
 export default {
     name: 'vueSearch',
     data () {
@@ -51,20 +50,39 @@ export default {
             this.isFirst = false
             this.isLoading = true
             this.userList = []
-            axios.get('https://api.github.com/search/users?q=' + this.keyWord).then(
-                response => {
-                    this.isLoading = false
-                    this.userList = response.data.items
-                    console.log('请求成功', response.data)
-                },
+            // axios.get('https://api.github.com/search/users?q=' + this.keyWord).then(
+            //     response => {
+            //         this.isLoading = false
+            //         this.errMsg = false
+            //         this.userList = response.data.items
+            //         console.log('请求成功', response.data)
+            //     },
+            //     error => {
+            //         console.error('请求失败', error.message)
+            //         this.isLoading = false
+            //         this.errMsg = error.message
+            //     }
+            // )
+            this.axios({
+                url: 'https://api.github.com/search/users?q=' + this.keyWord,
+                methods: 'get',
+                data: {}
+            }).then(
+                 response => {
+                         this.isLoading = false
+                         this.errMsg = false
+                         this.userList = response.data.items
+                         console.log('请求成功', response.data)
+                 },
                 error => {
                     console.error('请求失败', error.message)
                     this.isLoading = false
                     this.errMsg = error.message
                 }
             )
+
         },
-        userhtml: function( item ) {
+        userHtml: function( item ) {
             // window.location.href = item.html_url
             window.open(item.html_url)
         }
