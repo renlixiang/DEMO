@@ -25,6 +25,7 @@
                 <el-menu-item-group>
                     <el-menu-item index="drag" @click="changeDrag">拖动</el-menu-item>
                     <el-menu-item index="animal" @click="changeAnimal">动画</el-menu-item>
+                    <el-menu-item index="table" @click="changeTable">表格</el-menu-item>
                 </el-menu-item-group>
             </el-submenu>
         </el-menu>
@@ -82,6 +83,11 @@ export default {
         changeAnimal: function () {
             this.$router.push({path: 'animal'})
             this.$store.state.activeTab = 'animal'
+        },
+
+        changeTable: function() {
+            this.$router.push({path: 'table'})
+            this.$store.state.activeTab = 'table'
         },
     },
 }
