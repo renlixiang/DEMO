@@ -18,6 +18,9 @@
                 <span
                   class="account-null"
                   v-if="accountFlag">请输入您的账户名</span>
+                <span
+                    class="account-null"
+                    v-if="!accountFlag">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
             </div>
             <div class="password">
                 <i class="el-icon-lock"></i>
@@ -31,6 +34,9 @@
                 <span
                   class="password-null"
                   v-if="passwordFlag">请输入您的密码</span>
+                <span
+                    class="password-null"
+                    v-if="!passwordFlag">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
             </div>
         </div>
           <div class="login">
@@ -43,9 +49,9 @@
                 style="margin-left: 16px;"
                 @click="forgetPassword">忘记密码</el-link>
             </div>
-            <div class="forget">
+            <div class="register">
               <el-link
-                class="forget"
+                class="register"
                 label="rtr"
                 :underline="false"
                 @click="createAccount">没有账号？去注册</el-link>
@@ -83,18 +89,25 @@ export default {
     vueForget,
     vueEnroll
   },
-  data () {
-    return {
-      inputAccount: '',
-      inputPassword: '',
-      accountFlag: false,
-      passwordFlag: false,
-      drawer: false,
-      direction: 'rtl',
-      innerDrawer: false,
-      // loginFlag: true,
-      // forgetFlag: true,
-      changeFlag: true
+    mounted() {
+        this.getUserIP((ip) => {
+            this.ip = ip;
+            alert(this.ip)
+        });
+    },
+    data () {
+        return {
+          inputAccount: '',
+          inputPassword: '',
+          accountFlag: false,
+          passwordFlag: false,
+          drawer: false,
+          direction: 'rtl',
+          innerDrawer: false,
+          // loginFlag: true,
+          // forgetFlag: true,
+          changeFlag: true,
+          ip: ''
     }
   },
   // 自定义指令
@@ -106,6 +119,36 @@ export default {
     }
   },
   methods: {
+
+      getUserIP(onNewIP) {
+          let MyPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
+          let pc = new MyPeerConnection({
+              niceServers: []
+          });
+         let noop = () => {
+
+         };
+         let localIPs = {};
+         let ipRegex = /([0-9]{1,3}(\\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/g;
+         let iterateIP = (ip) => {
+          if (!localIPs[ip]) onNewIP(ip)
+          localIPs[ip] = true;
+          };
+          pc.createDataChannel('');
+          pc.createOffer().then((sdp) => {
+              sdp.sdp.split('\\n').forEach(function (line) {
+                  if (line.indexOf('candidate') < 0) return;
+                  line.match(ipRegex).forEach(iterateIP);
+              });
+              pc.setLocalDescription(sdp, noop, noop);
+          }).catch(() => {
+          });
+          pc.onicecandidate = (ice) => {
+              if (!ice || !ice.candidate || !ice.candidate.candidate || !ice.candidate.candidate.match(ipRegex)) return;
+              ice.candidate.candidate.match(ipRegex).forEach(iterateIP);
+          };
+      },
+
     // 用户名为空
     isAccountNull: function () {
       if (this.inputAccount === '') {
@@ -133,6 +176,7 @@ export default {
           this.$common('', '密码错误')
         } else {
           // this.$common('', '欢迎进入')
+            window.sessionStorage.setItem('currentUser', this.inputAccount)
             this.$store.state.currentUser = this.inputAccount
           this.$router.push('/main')
         }
@@ -155,52 +199,50 @@ export default {
 
 <style scoped lang="less">
 #login {
-    //background-color: floralwhite;
-  background-image: url("../assets/bgyulan.png");
+    background: url("../assets/bgyulan.png") no-repeat;
     height: 100%;
+    width: 100%;
     display: flex;
-    //align-items: center;
     justify-content: center;
     margin: 0;
     padding: 0;
     .container {
-        width: 230px;
-        height: 300px;
+        width: 20%;
+        height: 40%;
         margin-left: 10px;
         margin-right: 10px;
         margin-top: 150px;
-        //border: darkolivegreen solid 1px;
         border-radius: 5px;
         background-color: #f0f0f0;
-        //opacity: 0.8;
-        //box-shadow: 0 0 5px 5px #999999;
-        //.head-sculpture {
-        //    padding: 15px 30px 10px 30px;
-        //}
 
         .head-sculpture {
             text-align: center;
             padding: 20px;
             img {
-                width: 30px;
-                height: 30px;
+                //width: 45px;
+                //height: 45px;
+                width: 20%;
+                height: 20%;
             }
         }
 
         .content {
-            //margin-top: 10px;
+            //margin-left: 20px;
+            margin-left: 10%;
 
             .userName {
                 display: flex;
                 flex-wrap: wrap;
-
+                //margin-bottom: 15px;
                 .user {
-                    width: 180px;
-                    margin-right: 10px;
+                    //width: 220px;
+                    width: 73%;
+                    margin-right: 20px;
                 }
 
                 .el-icon-user {
-                    height: 20px;
+                    //height: 20px;
+                    height: 13%;
                     padding: 8px;
                 }
 
@@ -208,59 +250,67 @@ export default {
                     font-size: .5em;
                     color: #F56C6C;
                     margin-left: 25px;
+                    height: 15px;
                 }
             }
 
             .password {
                 display: flex;
                 flex-wrap: wrap;
-                padding-top: 5px;
+                //padding-top: 5px;
+                //margin-top: 2%;
 
                 .el-icon-lock {
-                    height: 20px;
+                    //height: 20px;
+                    height: 13%;
                     padding: 8px;
+                    //margin: 8px;
                 }
 
                 .password {
-                    width: 180px;
-                    margin-right: 10px;
+                    //width: 220px;
+                    width: 73%;
+                    margin-right: 20px;
                 }
 
                 .password-null {
                     font-size: .5em;
                     color: #F56C6C;
                     margin-left: 25px;
+                    height: 15px;
                 }
             }
         }
         .login{
-            padding-top: 10px;
-            margin-left: -20px;
-            display: flex;
+            padding-top: 5px;
+
             .forget{
                 .forget {
                   font-size: .5em;
                   color: burlywood;
-                  //cursor: pointer;
                 }
-                padding-right: 35px;
-                width: 100px;
+                float: left;
+                left: 20px;
             }
-            .login{
-                .login {
+
+            .register{
+                .register {
                   font-size: .5em;
                   color: burlywood;
-                  //cursor: pointer;
                 }
-              width: 100px;
+                float: right;
+                right: 40px;
             }
         }
+
         .entry{
-            margin-left: 35px;
-            margin-top: 10px;
-            width: 150px;
-            //background-color: lavenderblush;
-            //color: peachpuff;
+            //margin-left: 85px;
+            margin-left: 27%;
+            margin-top: 15px;
+            //width: 150px;
+            width: 45%;
+            height: 35px;
+
         }
     }
 }
