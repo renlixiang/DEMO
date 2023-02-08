@@ -1,15 +1,16 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-// import HelloWorld from '@/components/HelloWorld'
 import vueLogin from '@/components/Login'
 import vueMain from '@/components/Main'
 import vueHome from '@/components/Home'
 import vueSkin from '@/components/Skin'
 import vueCarousel from '@/components/Carousel'
+import vueTable from '@/components/Table'
 // import vueWaterfall from '@/components/pubu'
 import vueWaterfall from '@/components/waterfall'
 import vueSearch from '@/components/Search'
 import vueDrag from '@/components/Drag'
+import vueAnimal from '@/components/animal'
 Vue.use(Router)
 
 export default new Router({
@@ -55,7 +56,16 @@ export default new Router({
                     path: 'drag',
                     name: 'drag',
                     component: vueDrag
-                }]
+                },
+                {
+                    path: 'animal',
+                    name: 'animal',
+                    component: vueAnimal
+                },{
+                    path: 'table',
+                    name: 'table',
+                    component: vueTable
+                },]
         }
     ]
 })

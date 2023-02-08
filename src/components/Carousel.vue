@@ -1,39 +1,48 @@
 <template>
   <div class="container">
-    <div class="carousel" @mouseleave="runTimer" @mouseenter="stopTimer">
-      <div class="icon" v-show="showIcon">
-      <i
-        class="el-icon-arrow-left"
-        @click="rightMove"></i>
-      <i
-        class="el-icon-arrow-right"
-        @click="leftMove"></i>
-      <ul class="control">
-        <li @click="showImg1"
-            :class="1 === flag? 'slider-active': 'slider'">
-        </li>
-        <li @click="showImg2"
-            :class="2 === flag? 'slider-active': 'slider'">
-        </li>
-        <li @click="showImg3"
-            :class="3 === flag? 'slider-active': 'slider'">
-        </li>
-      </ul>
-      </div>
-        <div class="image">
-          <transition-group :name="name">
-            <div class="jpg" v-show="currentIndex === imgArr[0]? flag = imgArr[0] : false" :key="imgArr[0]">
-              <img src="../assets/bgyulan.png" alt="" height="300px" width="500px">
-            </div>
-            <div class="jpg" v-show="currentIndex === imgArr[1]? flag = imgArr[1] : false" :key="imgArr[1]">
-              <img src="../assets/bghuang.jpg" alt="" height="300px" width="500px">
-            </div>
-            <div class="jpg" v-show="currentIndex === imgArr[2]? flag = imgArr[2] : false" :key="imgArr[2]">
-              <img src="../assets/bgfengzheng.png" alt="" height="300px" width="500px">
-            </div>
-          </transition-group>
-        </div>
-    </div>
+<!--    <div class="carousel" @mouseleave="runTimer" @mouseenter="stopTimer">-->
+<!--      <div class="icon" v-show="showIcon">-->
+<!--      <i-->
+<!--        class="el-icon-arrow-left"-->
+<!--        @click="rightMove"></i>-->
+<!--      <i-->
+<!--        class="el-icon-arrow-right"-->
+<!--        @click="leftMove"></i>-->
+<!--      <ul class="control">-->
+<!--        <li @click="showImg1"-->
+<!--            :class="1 === flag? 'slider-active': 'slider'">-->
+<!--        </li>-->
+<!--        <li @click="showImg2"-->
+<!--            :class="2 === flag? 'slider-active': 'slider'">-->
+<!--        </li>-->
+<!--        <li @click="showImg3"-->
+<!--            :class="3 === flag? 'slider-active': 'slider'">-->
+<!--        </li>-->
+<!--      </ul>-->
+<!--      </div>-->
+<!--        <div class="image">-->
+<!--          <transition-group :name="name">-->
+<!--            <div class="jpg" v-show="currentIndex === imgArr[0]? flag = imgArr[0] : false" :key="imgArr[0]">-->
+<!--              <img src="../assets/bgyulan.png" alt="" height="300px" width="500px">-->
+<!--            </div>-->
+<!--            <div class="jpg" v-show="currentIndex === imgArr[1]? flag = imgArr[1] : false" :key="imgArr[1]">-->
+<!--              <img src="../assets/bghuang.jpg" alt="" height="300px" width="500px">-->
+<!--            </div>-->
+<!--            <div class="jpg" v-show="currentIndex === imgArr[2]? flag = imgArr[2] : false" :key="imgArr[2]">-->
+<!--              <img src="../assets/bgfengzheng.png" alt="" height="300px" width="500px">-->
+<!--            </div>-->
+<!--          </transition-group>-->
+<!--        </div>-->
+<!--    </div>-->
+
+      <!-- elementui组件-走马灯（卡片）-->
+      <template>
+          <el-carousel :interval="4000" type="card" height="400px">
+              <el-carousel-item v-for="item in carouseData" :key="item">
+                    <img  :src="item.url" alt=""  height="400px"/>
+              </el-carousel-item>
+          </el-carousel>
+      </template>
   </div>
 </template>
 
@@ -47,19 +56,27 @@ export default {
       imgArr: [1, 2, 3],
       showIcon: false,
       currentIndex: 1,
-      flag: 1
+      flag: 1,
+        carouseData: [
+            {url: require("../assets/bgyulan.png")},
+            {url: require("../assets/bghuang.jpg")},
+            {url: require("../assets/bgfengzheng.png")},
+            {url: require("../assets/4.jpg")},
+        ]
     }
   },
   mounted() {
     this.change()
   },
   methods: {
+      // 跳转
     change: function () {
       this.timer = setInterval(() => {
         this.rightImg()
 
       }, 2000)
     },
+      // 左移动
     leftImg: function () {
       this.name = 'left'
       if (this.currentIndex === 1) {
@@ -68,6 +85,7 @@ export default {
         this.currentIndex --
       }
     },
+      // 右移动
     rightImg: function () {
       this.name = 'right'
       if (this.currentIndex === 3) {
@@ -76,6 +94,7 @@ export default {
         this.currentIndex ++
       }
     },
+
     rightMove: function () {
       clearInterval(this.timer)
       this.rightImg()
@@ -84,6 +103,7 @@ export default {
       clearInterval(this.timer)
       this.leftImg()
     },
+      // 停止切换
     stopTimer: function () {
       clearInterval(this.timer)
       this.showIcon = true
@@ -206,5 +226,20 @@ export default {
       }
     }
   }
+    //.el-carousel__item h3 {
+    //    color: #475669;
+    //    font-size: 14px;
+    //    opacity: 0.75;
+    //    //line-height: 200px;
+    //    margin: 0;
+    //}
+
+    //.el-carousel__item:nth-child(2n) {
+    //    background-color: #99a9bf;
+    //}
+    //
+    //.el-carousel__item:nth-child(2n+1) {
+    //    background-color: #d3dce6;
+    //}
 }
 </style>
